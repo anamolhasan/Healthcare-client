@@ -14,7 +14,13 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [next.js 16](https://nextjs.org/) 
+- [shadcn](https://ui.shadcn.com/docs/installation/next) 
+- [tanstack query](https://tanstack.com/query/latest/docs/framework/react/installation) 
+- [tanstack form](https://tanstack.com/form/latest/docs/installation) 
+- [axios](https://axios-http.com/docs/intro) 
+- [zod](https://zod.dev/) 
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) 
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
