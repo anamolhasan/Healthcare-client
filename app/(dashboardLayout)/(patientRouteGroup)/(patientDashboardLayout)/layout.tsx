@@ -6,7 +6,10 @@ const PatientDashboardLayout = ({
     children: React.ReactNode
 }>) => {
   return (
-    <div>PatientDashboardLayout</div>
+    <>
+    Patient Dashboard Layout
+     {children}
+    </>
   )
 }
 

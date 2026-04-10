@@ -6,7 +6,7 @@ const CommonLayout = ({
     children: React.ReactNode
 }>) => {
   return (
-    <div>CommonLayout</div>
+    <div>{children}</div>
   )
 }
 
