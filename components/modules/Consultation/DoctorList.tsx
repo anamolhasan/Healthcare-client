@@ -1,22 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-'use client'
+"use client";
 
-import { getDoctors } from "@/app/(commonLayout)/consultation/_actions"
-import { useQuery } from "@tanstack/react-query"
+import { getDoctors } from "@/app/(commonLayout)/consultation/_actions";
+import { useQuery } from "@tanstack/react-query";
 
 const DoctorList = () => {
-    const {data} = useQuery({
-        queryKey:['doctors'],
-        queryFn:()=>getDoctors(),
-    })
-    console.log(data)
+  const { data } = useQuery({
+    queryKey: ["doctors"],
+    queryFn: () => getDoctors(),
+  });
+  // console.log(data)
   return (
-     <>
-      {/* <div>{data.data.map((doctor: any) => (
-      <div key={doctor.id}>{doctor.name}</div>
-    ))}</div> */}
-     </>
-  )
-}
+    <>
+      <div>
+        {data!.data.map((doctor: any) => (
+          <div key={doctor.id}>{doctor.name}</div>
+        ))}
+      </div>
+    </>
+  );
+};
 
-export default DoctorList
+export default DoctorList;
