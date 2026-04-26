@@ -14,7 +14,7 @@ export async function getNewTokensWithRefreshToken(refreshToken: string): Promis
             method:'POST',
             headers:{
                 'Content-Type': 'application/json',
-                Cookie:  `refreshToken${refreshToken}`
+                Cookie:  `refreshToken=${refreshToken}`
             }
         })
 
@@ -59,7 +59,7 @@ export async function getUserInfo () {
             method:"GET",
             headers:{
                 'Content-Type':'application/json',
-                Cookie: `accessToken=${accessToken}; better-auth.session_token${sessionToken}`
+                Cookie: `accessToken=${accessToken}; better-auth.session_token=${sessionToken}`
             }
         })
 

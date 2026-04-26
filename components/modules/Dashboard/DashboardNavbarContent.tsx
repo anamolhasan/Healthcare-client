@@ -61,7 +61,7 @@ const DashboardNavbarContent = ({dashboardHome, navItems, userInfo}:DashboardNav
         <NotificationDropdown />
 
         {/* User Dropdown */}
-        <UserDropdown />
+        <UserDropdown userInfo={userInfo}/>
       </div>
     </div>
   )
