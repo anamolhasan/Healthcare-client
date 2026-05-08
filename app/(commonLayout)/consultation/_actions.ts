@@ -12,6 +12,6 @@ interface IDoctor {
 
 export const getDoctors = async () => {
     const doctors = await httpClient.get<IDoctor[]>('/doctors')
-    console.log(doctors, 'server');
+    // console.log(doctors, 'server');
     return doctors
 }

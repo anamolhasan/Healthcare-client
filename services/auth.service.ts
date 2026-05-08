@@ -1,3 +1,5 @@
+'use server';
+
 import { setTokenInCookies } from "@/lib/tokenUtils";
 import { cookies } from "next/headers";
 
@@ -59,7 +61,7 @@ export async function getUserInfo () {
             method:"GET",
             headers:{
                 'Content-Type':'application/json',
-                Cookie: `accessToken=${accessToken}; better-auth.session_token=${sessionToken}`
+                Cookie: `accessToken=${accessToken}`
             }
         })
 

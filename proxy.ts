@@ -141,7 +141,7 @@ export async function proxy (request:NextRequest) {
                     if(pathname !== '/reset-password'){
                         const resetPasswordUrl = new URL('/reset-password', request.url);
                         resetPasswordUrl.searchParams.set('email', userInfo.url);
-                        return NextResponse.next();
+                        return NextResponse.redirect(resetPasswordUrl);
                     }
                     return NextResponse.next()
                 }
