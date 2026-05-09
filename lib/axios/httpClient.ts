@@ -22,7 +22,7 @@ async function tryRefreshToken (
     const requestHeader = await headers();
 
     if(requestHeader.get('x-token-refreshed') === '1'){
-        return // avoid multiple refresh attempts in the same request lifecycle
+        return; // avoid multiple refresh attempts in the same request lifecycle
     }
 
     try {

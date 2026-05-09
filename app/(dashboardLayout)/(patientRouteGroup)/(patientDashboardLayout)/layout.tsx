@@ -7,7 +7,6 @@ const PatientDashboardLayout = ({
 }>) => {
   return (
     <>
-    Patient Dashboard Layout
      {children}
     </>
   )
