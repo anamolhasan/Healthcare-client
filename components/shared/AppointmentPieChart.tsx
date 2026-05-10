@@ -17,7 +17,7 @@ const CHART_COLORS = [
   "oklch(0.828 0.189 84.429)", // chart-4 - lime
   "oklch(0.769 0.188 70.08)", // chart-5 - orange variant
 ];
-const AppointmentPicChart = ({data, title, description}: AppointmentPieChartProps) => {
+const AppointmentPieChart = ({data, title, description}: AppointmentPieChartProps) => {
 
     if(!data || !Array.isArray(data)){
         return (
@@ -91,4 +91,4 @@ const AppointmentPicChart = ({data, title, description}: AppointmentPieChartProp
   )
 }
 
-export default AppointmentPicChart
+export default AppointmentPieChart
