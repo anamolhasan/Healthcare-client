@@ -1,4 +1,4 @@
-import DoctorsTable from '@/components/modules/admin/DoctorsTable';
+import DoctorsTable from '@/components/modules/admin/DoctorManagement/DoctorsTable';
 import { getDoctors } from '@/services/doctor.service';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import React from 'react'

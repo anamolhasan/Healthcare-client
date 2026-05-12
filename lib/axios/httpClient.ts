@@ -15,7 +15,7 @@ async function tryRefreshToken (
   accessToken: string,
   refreshToken: string,
 ) :Promise<void> {
-    if(!isTokenExpiringSoon(accessToken)){
+    if(!(await isTokenExpiringSoon(accessToken))){
         return ;
     }
 
@@ -35,9 +35,11 @@ const axiosInstance = async () => {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get('accessToken')?.value;
     const refreshToken = cookieStore.get('refreshToken')?.value;
-
+// console.log(cookieStore.getAll())
     if(accessToken && refreshToken){
         await tryRefreshToken(accessToken, refreshToken);
+
+        // cookieStore = await cookies()
     }
 
     const cookieHeader = cookieStore
