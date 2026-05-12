@@ -130,20 +130,5 @@ export const DoctorsColumns : ColumnDef<IDoctor>[] = [
                   <DateCell date={row.original.createdAt} formatString="MMM dd, yyyy" />
             )
         }
-    },
-    {
-        id: 'averageRating',
-        accessorKey:'averageRating',
-        header: 'Rating',
-        cell: ({row}) => {
-            return (
-                <div className='flex items-center gap-1'>
-                    <Star className='h-4 w-4 fill-yellow-400 text-yellow-400' />
-                    <span className='text-sm font-medium'>
-                        {row.original.averageRating?.toFixed(1) || '0.0'}
-                    </span>
-                </div>
-            )
-        }
-    },
+    }
 ]
