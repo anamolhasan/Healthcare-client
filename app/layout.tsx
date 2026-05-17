@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import QueryProviders from "@/providers/QueryProvider";
+import { Toaster } from "sonner";
 
 
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <QueryProviders>
            {children}
+           <Toaster position="top-right" richColors/>
         </QueryProviders>
       </body>
     </html>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const AdminsDoctorsManagementLoading = () => {
   return (
-    <div>AdminsDoctorsManagementLoading</div>
+    <p>Loading Admins Doctors Management...</p>
   )
 }
 
