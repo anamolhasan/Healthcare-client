@@ -5,9 +5,26 @@ import { useQuery } from '@tanstack/react-query'
 import { IDoctor } from '@/types/doctor.types'
 import DataTable from '@/components/shared/table/DataTable'
 import { DoctorsColumns } from './DoctorsColumns'
+import { useSearchParams } from 'next/navigation'
 
-const DoctorsTable = () => {
 
+
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 10;
+const SPECIALTIES_FILTER_KEY = 'specialties.specialty.title'
+const APPOINTMENT_FEE_FILTER_KEY = 'appointmentFee'
+const DOCTOR_FILTER_DEFINITIONS = [
+  serverManagedFilter.single('gender'),
+  serverManagedFilter.multi(SPECIALTIES_FILTER_KEY),
+  serverManagedFilter.range(APPOINTMENT_FEE_FILTER_KEY)
+]
+
+const DoctorsTable = ({initialQueryString}:{initialQueryString:string}) => {
+
+  const searchParams = useSearchParams()
+  const {
+    viewingItem,
+  } = useRow
     // const doctorColumns: ColumnDef<IDoctor>[] = [
     //      { accessorKey: "name", header: "Name" },
     // //   { accessorKey: "specialization", header: "Specialization" },
