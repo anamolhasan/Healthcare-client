@@ -1,12 +1,12 @@
 'use client'
 
-import {  DataTableFilterValues, DataTableRangeValue, RangeOperator } from "@/components/shared/table/DataTableFilters"
+import {  DataTableFilterValue, DataTableFilterValues, DataTableRangeValue, RangeOperator } from "@/components/shared/table/DataTableFilters"
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { UpdateParamsFn } from "./useServerManagedDataTable";
 import { useCallback, useMemo } from "react";
 
 
-const DEFAULT_RANGE_OPERATORS: RangeOperator = ['gte', 'lte']
+const DEFAULT_RANGE_OPERATORS: RangeOperator[] = ['gte', 'lte']
 
 interface BaseServerManagedFilterDefinition {
     filterId: string;
@@ -80,13 +80,14 @@ export const useServerManagedDataTableFilters = ({
 
             if(definition.type === 'multi'){
                 acc[definition.filterId] = searchParams.getAll(definition.queryKey)
+                return acc
             }
 
             const operators = definition.operators ?? DEFAULT_RANGE_OPERATORS;
             const rangeValue: DataTableRangeValue = {};
 
             operators.forEach((operator) => {
-                rangeValue[operator] = searchParams.get(getRangeParamKey(definition.queryKey, operator)) ?? '',
+                rangeValue[operator] = searchParams.get(getRangeParamKey(definition.queryKey, operator)) ?? ''
             });
 
             acc[definition.filterId] = rangeValue;
@@ -127,7 +128,46 @@ export const useServerManagedDataTableFilters = ({
                 return;
             }
 
-            const operators = 
-        })
-    })
+            const operators = definition.operators ?? DEFAULT_RANGE_OPERATORS
+            operators.forEach((operator) => {
+                params.delete(getRangeParamKey(definition.queryKey, operator));
+            })
+
+            const rangeValue = 
+               value && !Array.isArray(value) && typeof value === 'object'
+                ? (value as DataTableRangeValue)
+                :{};
+
+
+            operators.forEach((operator) => {
+                const operatorsValue = rangeValue[operator]?.trim();
+                if(operatorsValue){
+                    params.set(getRangeParamKey(definition.queryKey, operator), operatorsValue);
+                }
+            })
+        },{resetPage:true})
+    },[definitions, updateParams])
+
+    const clearAllFilters = useCallback(()=>{
+        updateParams((params) => {
+            definitions.forEach((definition) => {
+                if(definition.type === 'single' || definition.type === 'multi'){
+                    params.delete(definition.queryKey);
+                    return;
+                }
+
+                const operators = definition.operators ?? DEFAULT_RANGE_OPERATORS
+                operators.forEach((operator) => {
+                    params.delete(getRangeParamKey(definition.queryKey, operator));
+                })
+            })
+        }, {resetPage:true})
+    }, [definitions, updateParams])
+
+
+    return {
+        filterValues,
+        handleFilterChange,
+        clearAllFilters
+    }
 }
