@@ -14,6 +14,10 @@ import { useMemo } from 'react'
 import { ISpecialty } from '@/types/specialty.types'
 import { PaginationMeta } from '@/types/api.types'
 import { DataTableFilterConfig,  DataTableFilterValues } from '@/components/shared/table/DataTableFilters'
+import CreateDoctorFormModal from './CreateDoctorFormModal'
+import EditDoctorFormModal from './EditDoctorFormModal'
+import DeleteDoctorConfirmationDialog from './DeleteDoctorConfirmationDialog'
+import ViewDoctorProfileDialog from './ViewDoctorProfileDialog'
 
 
 
@@ -133,55 +137,8 @@ const DoctorsTable = ({initialQueryString}:{initialQueryString:string}) => {
       };
     },[filterValues])
 
-    // const {data:doctors} = doctorDataResponse! || [];
-
-    // const handleView = (doctor: IDoctor) => {
-    //   console.log('View Doctor', doctor)
-    // }
-
-    // const handleEdit = (doctor: IDoctor) => {
-    //   console.log('Edit doctor', doctor);
-    // }
-
-    // const handleDelete = (doctor: IDoctor) => {
-    //   console.log('Delete doctor', doctor)
-    // }
-    // const {getHeaderGroups, getRowModel} = useReactTable({
-    //   data: doctors,
-    //   columns:doctorColumns,
-    //   getCoreRowModel: getCoreRowModel(),
-    // })
-
-    // console.log(doctors)
   return (
-    // <Table>
-    //   <TableHeader>
-    //     {getHeaderGroups().map((hg)=> (
-    //       <TableRow key={hg.id} >
-    //         {hg.headers.map((header) => (
-    //           <TableHead key={header.id}>
-    //             {flexRender(
-    //               header.column.columnDef.header,
-    //               header.getContext(),
-    //             )}
-    //           </TableHead>
-    //         ))}
-    //       </TableRow>
-    //     ))}
-    //   </TableHeader>
-    //   <TableBody>
-    //     {getRowModel().rows.map((row) => (
-    //       <TableRow key={row.id} >
-    //         {row.getVisibleCells().map((cell) => (
-    //           <TableCell key={cell.id} >
-    //             {flexRender(cell.column.columnDef.cell, cell.getContext())}
-    //           </TableCell>
-    //         ))}
-    //       </TableRow>
-    //     ))}
-    //   </TableBody>
-    // </Table>
-
+<>
     <DataTable 
      data={doctors}
      columns={DoctorsColumns}
@@ -208,9 +165,35 @@ const DoctorsTable = ({initialQueryString}:{initialQueryString:string}) => {
       onFilterChange:handleFilterChange,
       onClearAll:clearAllFilters,
      }}
-
-     
+     toolbarAction={
+      <CreateDoctorFormModal 
+       specialties={specialties}
+       isLoadingSpecialties={isLoadingSpecialties}
+      />
+     }
+     meta={meta}
+     actions={tableActions}  
     />
+    <EditDoctorFormModal 
+     open={isEditModalOpen}
+     onOpenChange={onEditOpenChange}
+     doctor={editingItem}
+     specialties={specialties}
+     isLoadingSpecialties={isLoadingSpecialties}
+    />
+
+    <DeleteDoctorConfirmationDialog 
+     open={isDeleteDialogOpen}
+     onOpenChange={onDeleteOpenChange}
+     doctor={deletingItem}
+    />
+
+    <ViewDoctorProfileDialog 
+     open={isViewDialogOpen}
+     onOpenChange={onViewOpenChange}
+     doctor={viewingItem}
+    />
+</>
   )
 }
 

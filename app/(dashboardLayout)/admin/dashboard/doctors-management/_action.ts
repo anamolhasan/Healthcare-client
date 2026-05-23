@@ -1,6 +1,6 @@
 'use server'
 
-import { createDoctor, getDoctorById, updateDoctor } from "@/services/doctor.service"
+import { createDoctor, deleteDoctor, getDoctorById, updateDoctor } from "@/services/doctor.service"
 import { ApiErrorResponse, ApiResponse } from "@/types/api.types"
 import { ICreateDoctorPayload, IDoctor, IDoctorDetails, IUpdateDoctorPayload } from "@/types/doctor.types"
 import { createDoctorServerZodSchema, updateDoctorServerZodSchema } from "@/zod/doctor.validation"
@@ -71,6 +71,26 @@ export const updateDoctorAction = async (
          success:false,
         message: getActionErrorMessage(error, 'Failed to update doctor')
        }
+    }
+}
+
+export const deleteDoctorAction = async (
+    id:string
+):Promise<ApiResponse<{message:string}> | ApiErrorResponse> => {
+    if(!id){
+        return {
+            success: false,
+            message: 'Invalid doctor id'
+        }
+    }
+
+    try {
+        return await deleteDoctor(id)
+    } catch (error) {
+        return {
+            success: false,
+            message: getActionErrorMessage(error, 'Failed to delete doctor')
+        }
     }
 }
 

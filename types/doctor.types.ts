@@ -89,7 +89,7 @@ export interface IDoctorUserDetails {
   emailVerified?:boolean;
   image?:string;
   isDeletedAt?:string | Date | null;
-  cratedAt?: string | Date;
+  createdAt?: string | Date;
   updatedAt ?: string | Date;
 }
 
@@ -98,12 +98,12 @@ export interface IDoctorReview {
   rating?: number;
   comment?:string;
   patientId?:string;
-  cratedAt?: string | Date;
+  createdAt?: string | Date;
 }
 
 export interface IDoctorScheduleItem {
   id?:string;
-  isBooking?:boolean;
+  isBooked?:boolean;
   schedule?:{
     id?:string;
     startDateTime?: string | Date;
