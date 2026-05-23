@@ -38,7 +38,7 @@ export const useServerManagedDataTableSearch = ({
     },[queryKey, searchParams, updateParams])
 
     return {
-        searchParams,
+        searchTermFromUrl,
         handleDebouncedSearchChange,
     }
 }

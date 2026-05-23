@@ -2,7 +2,7 @@
 
 import { httpClient } from "@/lib/axios/httpClient"
 import { ICreateDoctorPayload, IDoctor, IDoctorDetails, IUpdateDoctorPayload } from "@/types/doctor.types"
-import { ISpecialty } from "@/types/specialty.type"
+import { ISpecialty } from "@/types/specialty.types"
 
 export const getDoctors = async (queryString: string) => {
     try {

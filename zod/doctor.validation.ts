@@ -130,14 +130,10 @@ export const createDoctorServerZodSchema = z.object({
           .min(2, 'Current working place must be at least 2 characters')
           .max(50, 'Current working place must be at most 50 characters'),
     designation: z
-         .array(
-            z
             .string()
             .trim()
             .min(2, 'Designation must be at least 2 characters')
-            .max(50, 'Designation must be at most 50 characters'),
-         )
-         .min(1,'At least one designation is required'),
+            .max(50, 'Designation must be at most 50 characters'),      
     }),
     specialties: z
          .array(z.uuid('Please select a valid specialty'))

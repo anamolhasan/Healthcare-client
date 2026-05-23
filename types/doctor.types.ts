@@ -54,7 +54,7 @@ export interface ICreateDoctorPayload {
     appointmentFee:number;
     qualification: string;
     currentWorkingPlace: string;
-    designation: string[];
+    designation: string;
    };
    specialties: string[];
 }
@@ -95,7 +95,7 @@ export interface IDoctorUserDetails {
 
 export interface IDoctorReview {
   id?: string;
-  ration?: number;
+  rating?: number;
   comment?:string;
   patientId?:string;
   cratedAt?: string | Date;
@@ -134,5 +134,5 @@ export interface IDoctorDetails extends IDoctor {
   user: IDoctorUserDetails;
   appointments?:IDoctorAppointmentItem[];
   doctorSchedules?:IDoctorScheduleItem[];
-  review?:IDoctorReview[];
+  reviews?:IDoctorReview[];
 }
