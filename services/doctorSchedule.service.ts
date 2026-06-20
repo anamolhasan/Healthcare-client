@@ -1,7 +1,7 @@
 'use server'
 
 import { httpClient } from "@/lib/axios/httpClient"
-import { ICreateDoctorSchedulePayload, IDoctorSchedule } from "@/types/doctorSchedule.types"
+import { ICreateDoctorSchedulePayload, IDoctorSchedule, IUpdateDoctorSchedulePayload } from "@/types/doctorSchedule.types"
 
 export const getMyDoctorSchedules = async (queryString: string) => {
     try {
@@ -23,9 +23,21 @@ export const createMyDoctorSchedule = async (payload: ICreateDoctorSchedulePaylo
             payload,
         )
     } catch (error) {
-        console.log('Error updating doctor schedule:', error)
+        console.log('Error create doctor schedule:', error)
         throw error
     }
+}
+
+export const updateMyDoctorSchedule = async (payload:IUpdateDoctorSchedulePayload) => {
+  try {
+    return await httpClient.patch<{count:number}>(
+     '/doctor-schedule/update-my-doctor-schedule',
+     payload,
+    )
+  } catch (error) {
+    console.log('Error update doctor schedule:', error)
+    throw error
+  }
 }
 
 export const deleteMyDoctorSchedule = async (id: string) => {
