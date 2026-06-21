@@ -36,7 +36,7 @@ interface DataTableProps <TData>{
         initialValue?: string;
         placeholder?: string;
         debounceMs?:number;
-        onDebounceChange:(value:string) => void;
+        onDebouncedChange:(value:string) => void;
     }
     filters?:{
         configs: DataTableFilterConfig[];
@@ -171,7 +171,7 @@ const DataTable = <TData,>({
                      initialValue={search.initialValue}
                      placeholder={search.placeholder}
                      debounceMs={search.debounceMs}
-                     onDebouncedChange={search.onDebounceChange}
+                     onDebouncedChange={search.onDebouncedChange}
                      isLoading={isLoading}
                     />
                 )}
