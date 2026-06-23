@@ -16,7 +16,7 @@ export const getDoctors = async (queryString: string) => {
 
 export const getAllSpecialties = async () => {
     try {
-        const specialties = await httpClient.get<ISpecialty>('/specialties')
+        const specialties = await httpClient.get<ISpecialty[]>('/specialties')
         return specialties
     } catch (error) {
         console.log('Error fetching specialties:', error);

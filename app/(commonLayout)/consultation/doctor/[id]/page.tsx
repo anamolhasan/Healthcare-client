@@ -1,37 +1,38 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { getUserInfo } from '@/services/auth.service'
-import { getDoctorById } from '@/services/doctor.service'
-import { IDoctorDetails } from '@/types/doctor.types'
-import { format } from 'date-fns'
-import Link from 'next/link'
+import BookAppointmentModal from "@/components/modules/Patient/Appointments/BookAppointmentModal"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { getUserInfo } from "@/services/auth.service"
+import { getDoctorById } from "@/services/doctor.service"
+import { IDoctorDetails } from "@/types/doctor.types"
+import { format } from "date-fns"
+import Link from "next/link"
 
 
-const formatDateTime = (value?:string | Date | null) => {
-  if(!value){
-    return 'N/A'
+const formatDateTime = (value?: string | Date | null) => {
+  if (!value) {
+    return "N/A"
   }
 
   const dateValue = new Date(value)
-  if(Number.isNaN(dateValue.getTime())){
-    return 'N/A'
+  if (Number.isNaN(dateValue.getTime())) {
+    return "N/A"
   }
 
-  return format(dateValue, 'MMM dd, yyyy hh:mm a')
+  return format(dateValue, "MMM dd, yyyy hh:mm a")
 }
 
-const getInitials = (name?:string) => {
-  if(!name){
-    return 'DR'
+const getInitials = (name?: string) => {
+  if (!name) {
+    return "DR"
   }
 
   return name
-       .trim()
-       .split(/\s+/)
-       .slice(0,2)
-       .map((item) => item[0]?.toUpperCase() ?? '')
-       .join('')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((item) => item[0]?.toUpperCase() ?? "")
+    .join("")
 }
 
 const getTodayStart = () => {
@@ -42,20 +43,20 @@ const getTodayStart = () => {
 
 const ConsultationDoctorByIdPage = async ({
   params,
-}:{
-  params: Promise<{id:string}>
+}: {
+  params: Promise<{ id: string }>
 }) => {
-  const {id} = await params
+  const { id } = await params
   const currentUser = await getUserInfo()
 
   let doctorDetails: IDoctorDetails | null = null
-  let errorMessage = ''
+  let errorMessage = ""
 
   try {
     const response = await getDoctorById(id)
     doctorDetails = response.data
   } catch (error) {
-     if (
+    if (
       error &&
       typeof error === "object" &&
       "response" in error &&
@@ -73,9 +74,9 @@ const ConsultationDoctorByIdPage = async ({
     }
   }
 
-  if(!doctorDetails){
+  if (!doctorDetails) {
     return (
-       <section className="space-y-4">
+      <section className="space-y-4">
         <Button asChild variant="outline">
           <Link href="/consultation">Back to Consultation</Link>
         </Button>
@@ -89,28 +90,30 @@ const ConsultationDoctorByIdPage = async ({
   const todayStart = getTodayStart()
 
   const availableUpcomingSchedules = (doctorDetails.doctorSchedules ?? [])
-         .filter((item) => {
-          if(item.isBooked){
-            return false
-          }
+    .filter((item) => {
+      if (item.isBooked) {
+        return false
+      }
 
-          if(!item.schedule?.startDateTime){
-            return false
-          }
+      if (!item.schedule?.startDateTime) {
+        return false
+      }
 
-          const startDate = new Date(item.schedule.startDateTime)
-          if(Number.isNaN(startDate.getTime())){
-            return false
-          }
-          return startDate >= todayStart
-         })
-         .sort((a, b) => {
-          const leftValue = new Date(a.schedule?.startDateTime ?? 0).getTime()
-          const rightValue = new Date(b.schedule?.startDateTime ?? 0).getTime()
-          return leftValue - rightValue
-         })
+      const startDate = new Date(item.schedule.startDateTime)
+      if (Number.isNaN(startDate.getTime())) {
+        return false
+      }
+
+      return startDate >= todayStart
+    })
+    .sort((a, b) => {
+      const leftValue = new Date(a.schedule?.startDateTime ?? 0).getTime()
+      const rightValue = new Date(b.schedule?.startDateTime ?? 0).getTime()
+      return leftValue - rightValue
+    })
+
   return (
-     <section className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <Button asChild variant="outline">
         <Link href="/consultation">Back to Consultation</Link>
       </Button>

@@ -1,90 +1,85 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
-import React from 'react'
-// import { getDoctors } from './_actions'
-import DoctorList from '@/components/modules/Consultation/DoctorList'
-import { getAllSpecialties, getDoctors } from '@/services/doctor.service'
-import { getUserInfo } from '@/services/auth.service';
+import DoctorsList from "@/components/modules/Consultation/DoctorList";
+import { getUserInfo } from "@/services/auth.service";
+import { getAllSpecialties, getDoctors } from "@/services/doctor.service";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 
-
-const SPECIALTIES_FILTER_KEY = 'specialties.specialty.title';
-const APPOINTMENT_FEE_FILTER_KEY = 'appointmentFee';
+const SPECIALTIES_FILTER_KEY = "specialties.specialty.title";
+const APPOINTMENT_FEE_FILTER_KEY = "appointmentFee";
 
 const CONSULTATION_ALLOWED_QUERY_KEYS = new Set([
-  'page',
-  'limit',
-  'sortBy',
-  'sortOrder',
-  'searchTerm',
-  'gender',
+  "page",
+  "limit",
+  "sortBy",
+  "sortOrder",
+  "searchTerm",
+  "gender",
   SPECIALTIES_FILTER_KEY,
   `${APPOINTMENT_FEE_FILTER_KEY}[gte]`,
   `${APPOINTMENT_FEE_FILTER_KEY}[lte]`,
-])
+]);
 
 const ConsultationPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{[key:string]: string | string[] | undefined}>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-
   const queryParamsObjects = await searchParams;
 
   const normalizedQueryParams = new URLSearchParams();
 
   Object.keys(queryParamsObjects).forEach((key) => {
-    if(!CONSULTATION_ALLOWED_QUERY_KEYS.has(key)){
-      return
+    if (!CONSULTATION_ALLOWED_QUERY_KEYS.has(key)) {
+      return;
     }
 
- const rawValue = queryParamsObjects[key];
- if(rawValue === undefined){
-  return ;
- }
-
-
- if(Array.isArray(rawValue)){
-  rawValue.forEach((value) => {
-    const normalizedValue = value.trim();
-    if(normalizedValue){
-      normalizedQueryParams.append(key, normalizedValue)
+    const rawValue = queryParamsObjects[key];
+    if (rawValue === undefined) {
+      return;
     }
-  })
-  return;
- }
 
- const normalizedValue = rawValue.trim();
- if(normalizedValue){
-  normalizedQueryParams.set(key, normalizedValue)
- }
-})
+    if (Array.isArray(rawValue)) {
+      rawValue.forEach((value) => {
+        const normalizedValue = value.trim();
+        if (normalizedValue) {
+          normalizedQueryParams.append(key, normalizedValue);
+        }
+      });
+      return;
+    }
 
-const queryString = normalizedQueryParams.toString();
-const currentUser = await getUserInfo();
+    const normalizedValue = rawValue.trim();
+    if (normalizedValue) {
+      normalizedQueryParams.set(key, normalizedValue);
+    }
+  });
 
-  const queryClient = new QueryClient()
+  const queryString = normalizedQueryParams.toString();
+  const currentUser = await getUserInfo();
+
+  const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey:['doctors', queryString],
-    queryFn : () => getDoctors(queryString),
-    staleTime: 1000 * 60 * 60 ,
-    gcTime: 1000 * 60 *60 * 6
-  })
+    queryKey: ["doctors", queryString],
+    queryFn: () => getDoctors(queryString),
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 60 * 6,
+  });
 
   await queryClient.prefetchQuery({
-    queryKey:['specialties'],
-    queryFn:getAllSpecialties,
-    staleTime: 1000 * 60 * 60 * 60,
-    gcTime: 1000 * 60 * 60 * 24
-  })
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-       <DoctorList 
-       initialQueryString={queryString}
-       isAuthenticated = {Boolean(currentUser)}
-       viewerRole={currentUser?.role ?? null}
-       />
-    </HydrationBoundary>
-  )
+    queryKey: ["specialties"],
+    queryFn: getAllSpecialties,
+    staleTime: 1000 * 60 * 60 * 6,
+    gcTime: 1000 * 60 * 60 * 24,
+  });
+ return (
+   <HydrationBoundary state={dehydrate(queryClient)}>
+      <DoctorsList
+        initialQueryString={queryString}
+        isAuthenticated={Boolean(currentUser)}
+        viewerRole={currentUser?.role ?? null}
+      />
+   </HydrationBoundary>
+ );
 }
 
 export default ConsultationPage
