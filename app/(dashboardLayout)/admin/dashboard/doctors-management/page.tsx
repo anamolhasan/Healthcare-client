@@ -21,7 +21,7 @@ const DoctorsManagementPage = async ({
       .map((key) => {
         const value = queryParamsObjects[key];
         if(value === undefined){
-          return
+          return ''
         }
 
         if(Array.isArray(value)){
@@ -47,6 +47,8 @@ const DoctorsManagementPage = async ({
   await queryClient.prefetchQuery({
     queryKey:['specialties'],
     queryFn:()=> getAllSpecialties(),
+    staleTime: 1000 * 60 * 60 * 6, // 6 hours
+    gcTime: 1000 * 60 * 60 * 24, // 24 hours
   })
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

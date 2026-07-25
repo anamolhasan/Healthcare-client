@@ -2,14 +2,14 @@
 
 import { getAllSpecialties, getDoctors } from '@/services/doctor.service'
 import { useQuery } from '@tanstack/react-query'
-import { Gender, IDoctor } from '@/types/doctor.types'
+import {  IDoctor } from '@/types/doctor.types'
 import DataTable from '@/components/shared/table/DataTable'
 import { DoctorsColumns } from './DoctorsColumns'
 import { useSearchParams } from 'next/navigation'
 import { useRowActionModalState } from '@/hooks/useRowActionModalState'
 import { UseServerManagedDataTable } from '@/hooks/useServerManagedDataTable'
 import { useServerManagedDataTableSearch } from '@/hooks/useServerManagedDataTableSearch'
-import { useServerManagedDataTableFilters } from '@/hooks/useServerManagedDataTableFilter'
+import { serverManagedFilter, useServerManagedDataTableFilters } from '@/hooks/useServerManagedDataTableFilter'
 import { useMemo } from 'react'
 import { ISpecialty } from '@/types/specialty.types'
 import { PaginationMeta } from '@/types/api.types'
@@ -26,10 +26,10 @@ const DEFAULT_LIMIT = 10;
 const SPECIALTIES_FILTER_KEY = 'specialties.specialty.title'
 const APPOINTMENT_FEE_FILTER_KEY = 'appointmentFee'
 const DOCTOR_FILTER_DEFINITIONS = [
-  serverManagedFilter.single('gender'),
+  serverManagedFilter.single("gender"),
   serverManagedFilter.multi(SPECIALTIES_FILTER_KEY),
-  serverManagedFilter.range(APPOINTMENT_FEE_FILTER_KEY)
-]
+  serverManagedFilter.range(APPOINTMENT_FEE_FILTER_KEY),
+];
 
 const DoctorsTable = ({initialQueryString}:{initialQueryString:string}) => {
 
@@ -89,7 +89,7 @@ const DoctorsTable = ({initialQueryString}:{initialQueryString:string}) => {
     const {data:specialtiesResponse, isLoading: isLoadingSpecialties} = useQuery({
       queryKey:['specialties'],
       queryFn: getAllSpecialties,
-      staleTime: 1000 * 60 * 6,
+      staleTime: 1000 * 60 * 60 * 6,
       gcTime: 1000 * 60 * 60 * 24,
     })
 
@@ -100,7 +100,7 @@ const DoctorsTable = ({initialQueryString}:{initialQueryString:string}) => {
 
     const meta: PaginationMeta | undefined = doctorDataResponse?.meta;
 
-    const filterConfigs = useMemo<DataTableFilterConfig>(()=>{
+    const filterConfigs = useMemo<DataTableFilterConfig[]>(()=>{
       return[
         {
           id:'gender',

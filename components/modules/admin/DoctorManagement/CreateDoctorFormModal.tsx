@@ -162,7 +162,7 @@ const CreateDoctorFormModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="max-h-[calc(90vh-5.5rem)">
+        <ScrollArea className="max-h-[calc(90vh-5.5rem)]">
           <div className="px-6 py-5">
             <form
               method="POST"
@@ -465,6 +465,6 @@ const CreateDoctorFormModal = ({
       </DialogContent>
     </Dialog>
   );
-};
+}; 
 
 export default CreateDoctorFormModal;
