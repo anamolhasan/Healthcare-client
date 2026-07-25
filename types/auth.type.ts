@@ -13,3 +13,14 @@ export interface ILoginResponse {
         emailVerified:boolean;
     }
 }
+
+// export interface TRegisterResponse {
+//   success: boolean;
+//   message: string;
+//   data: {
+//     accessToken: string;
+//     refreshToken: string;
+//     patient: Patient;
+//     user: User;
+//   };
+// };

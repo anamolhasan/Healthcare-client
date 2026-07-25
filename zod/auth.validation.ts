@@ -12,3 +12,28 @@ export const loginZodSchema = z.object({
 })
 
 export type ILoginPayload = z.infer<typeof loginZodSchema>;
+
+
+export const registerZodSchema = z
+  .object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.email().trim().toLowerCase(),
+    password: z.string().min(8),
+    confirmPassword: z.string(),
+    acceptTerms: z.literal(true, {
+      error: "You must accept the terms and conditions",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export const registerApiSchema = z.object({
+  name: z.string().min(2),
+  email: z.email().trim().toLowerCase(),
+  password: z.string().min(8),
+});
+
+export type IRegisterForm = z.infer<typeof registerZodSchema>;
+export type IRegistrationPayload = z.infer<typeof registerApiSchema>;

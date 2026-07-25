@@ -51,6 +51,9 @@ export const createDoctorAction = async (
     }
 }
 
+
+
+
 export const updateDoctorAction = async (
     id: string,
     payload: IUpdateDoctorPayload,
@@ -73,6 +76,8 @@ export const updateDoctorAction = async (
        }
     }
 }
+
+
 
 export const deleteDoctorAction = async (
     id:string

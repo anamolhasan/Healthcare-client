@@ -82,7 +82,11 @@ const httpGet = async <TData>(
     }
 }
 
-const httpPost = async <TData>(endPoint:string, data:unknown, options?:ApiRequestOptions): Promise<ApiResponse<TData>> => {
+const httpPost = async <TData>(
+    endPoint:string, 
+    data:unknown, 
+    options?:ApiRequestOptions
+): Promise<ApiResponse<TData>> => {
     try {
         const instance = await axiosInstance()
         const response = await instance.post<ApiResponse<TData>>(endPoint, data, {
