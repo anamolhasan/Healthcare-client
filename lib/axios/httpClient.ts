@@ -77,7 +77,13 @@ const httpGet = async <TData>(
         });
         return response.data;
     } catch (error) {
-        console.error(`GET request to ${endpoint}failed:`, error)
+        if (
+            axios.isAxiosError(error) &&
+            error.response?.status !== 401
+        ) {
+            console.error(`GET request to ${endpoint} failed:`, error);
+        }
+
         throw error;
     }
 }

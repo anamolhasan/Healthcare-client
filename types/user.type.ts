@@ -7,3 +7,11 @@ export interface UserInfo {
     email: string;
     role: UserRole;
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  image: string | null;
+  role: string;
+}
