@@ -12,7 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { logOutAction } from "@/app/(commonLayout)/(authRouteGroup)/login/_action";
+import { logOutAction } from "@/app/(commonLayout)/(authRouteGroup)/login/_logoutAction";
 
 const LogoutButton = () => {
   return (
@@ -25,9 +25,7 @@ const LogoutButton = () => {
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you sure you want to logout?
-          </AlertDialogTitle>
+          <AlertDialogTitle>Are you sure you want to logout?</AlertDialogTitle>
 
           <AlertDialogDescription>
             You will be logged out of your account and redirected to the login
@@ -40,9 +38,7 @@ const LogoutButton = () => {
 
           <form action={logOutAction}>
             <AlertDialogAction asChild>
-              <button type="submit">
-                Logout
-              </button>
+              <button type="submit">Logout</button>
             </AlertDialogAction>
           </form>
         </AlertDialogFooter>

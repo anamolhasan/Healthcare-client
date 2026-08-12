@@ -3,7 +3,6 @@
 
 import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/authUtils";
 import { httpClient } from "@/lib/axios/httpClient";
-import { deleteCookie } from "@/lib/cookieUtils";
 import { setTokenInCookies } from "@/lib/tokenUtils";
 import { ApiErrorResponse } from "@/types/api.types";
 import { ILoginResponse } from "@/types/auth.type";
@@ -61,10 +60,3 @@ export const loginAction = async (payload : ILoginPayload, redirectPath ?: strin
     }
 }
 
-export const logOutAction = async ()  => {
-    await deleteCookie('accessToken')
-    await deleteCookie('refreshToken')
-    await deleteCookie('better-auth.session_token')
-
-    redirect('/login')
-}

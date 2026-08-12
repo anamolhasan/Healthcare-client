@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
+import SpecialtyForm from "./SpecialtyForm";
 
 const CreateSpecialtyFormModal = () => {
   const [open, setOpen] = useState(false);
