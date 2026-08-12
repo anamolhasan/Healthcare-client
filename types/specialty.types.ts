@@ -1,21 +1,3 @@
-// export interface ISpecialty {
-//     id: string;
-//     title : string;
-//     icon?: string;
-//     createdAt?: string;
-//     updatedAt ?:string;
-// }
-
-export interface ISpecialtyResponse {
-  data: ISpecialty[];
-  meta: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-}
-
 export interface ISpecialty {
   id: string;
   title: string;
@@ -30,9 +12,9 @@ export interface ISpecialty {
 export interface ISpecialtyPayload {
   title: string;
   description?: string;
-  icon?: string;
+  icon?: File | null;
 }
- 
+
 export interface ISpecialtyQuery {
   page?: number;
   limit?: number;
