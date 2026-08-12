@@ -1,19 +1,22 @@
 import Link from "next/link";
 import { Menu } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { getMeAction } from "@/app/(commonLayout)/_actions/auth.action";
-
+import LogoutButton from "../modules/auth/LogoutButton";
 
 const Navbar = async () => {
+  const user = await getMeAction();
 
-    const user = await getMeAction();
-    console.log(user)
   return (
-    <header className="sticky top-0 z-50   backdrop-blur bg-black text-white">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/90 text-white backdrop-blur">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-primary">
+        <Link
+          href="/"
+          className="text-2xl font-bold text-primary transition-colors hover:text-primary/80"
+        >
           PH Healthcare
         </Link>
 
@@ -56,36 +59,43 @@ const Navbar = async () => {
         </nav>
 
         {/* Right Side */}
-   {user ? (
-  <>
-    <Button asChild>
-      <Link href="/dashboard">Dashboard</Link>
-    </Button>
+        <div className="hidden items-center gap-3 md:flex">
+          {user ? (
+            <>
+              <Button asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
 
-    <Avatar>
-      <AvatarImage src={user.image ?? ""} />
-      <AvatarFallback>
-        {user.name?.charAt(0).toUpperCase()}
-      </AvatarFallback>
-    </Avatar>
-  </>
-) : (
-  <>
-    <Button variant="ghost" asChild>
-      <Link href="/login">Login</Link>
-    </Button>
+              <Avatar className="h-9 w-9 border border-white/20">
+                <AvatarImage
+                  src={user.image ?? ""}
+                  alt={user.name ?? "User"}
+                />
+                <AvatarFallback>
+                  {user.name?.charAt(0)?.toUpperCase() ?? "U"}
+                </AvatarFallback>
+              </Avatar>
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Login</Link>
+              </Button>
 
-    <Button asChild>
-      <Link href="/register">Register</Link>
-    </Button>
-  </>
-)}
+              <Button asChild>
+                <Link href="/register">Register</Link>
+              </Button>
+            </>
+          )}
+        </div>
 
         {/* Mobile Menu Button */}
         <Button
           variant="ghost"
           size="icon"
           className="md:hidden"
+          aria-label="Open menu"
         >
           <Menu className="h-5 w-5" />
         </Button>

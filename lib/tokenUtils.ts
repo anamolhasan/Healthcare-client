@@ -1,8 +1,7 @@
 'use server'
 
 import jwt, { JwtPayload } from "jsonwebtoken"
-import { setCookie } from "./cookieUtils";
-// import { setCookie } from "./CookieUtils";
+import { setCookie, deleteCookie } from "./cookieUtils";
 
 
 // const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET
@@ -42,6 +41,10 @@ export const setTokenInCookies = async (
     await setCookie(name, token, maxAgeInSeconds || fallbackMaxAgeInSeconds)
 }
 
+export const deleteTokenFromCookies = async (name: string) => {
+    await deleteCookie(name)
+}
+ 
 export async function isTokenExpiringSoon(token:string, thresholdInSeconds = 300) : Promise<boolean>{
     const remainingSeconds = getTokenSecondsRemaining(token);
     return remainingSeconds > 0 && remainingSeconds <= thresholdInSeconds;
